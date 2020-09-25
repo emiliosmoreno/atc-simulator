@@ -63,7 +63,7 @@ def pintar_espacio_aereo(self):
 
 def pintar_pausa_juego(self):
     
-        if (not self.en_pausa): 
+        if (self.en_pausa): 
             self.escena.blit(self.font.render("PAUSA",
                                          -1,
                                          (255, 255, 255)),
