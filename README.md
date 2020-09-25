@@ -1,2 +1,2 @@
 # atc-simulator
-An atc simulation game
+Un simulador de controlador aéreo
