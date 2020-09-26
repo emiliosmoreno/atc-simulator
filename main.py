@@ -8,7 +8,7 @@ from test._test_multiprocessing import DELTA
 # Clase principal del juego
 class ATCsimulator:
 
-    # Método de inicialización 
+    # Método de inicialización  
     def __init__(self):
         
         # Constantes
