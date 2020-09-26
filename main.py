@@ -4,7 +4,7 @@
 import sys, pygame, math, random
 from pygame.locals import *
 
-# Constantes
+# Constantes 
 class Constantes:
     
     CL_BLUE=(0,0,255)
@@ -35,11 +35,7 @@ class Avion:
         self.velocidad = velocidad / 100
         self.direccion=180 #Valores permitidos: 1-360 (grados)s
         self.font = pygame.font.SysFont("Arial", 12)
-<<<<<<< HEAD
-=======
-        
->>>>>>> branch 'feature-generacion' of https://github.com/emiliosmoreno/atc-simulator.git
-        
+
     def avanzar(self):
        
         desplazamiento_x=math.cos(math.radians(self.direccion))
@@ -84,16 +80,10 @@ class Avion:
             else:
                 self.desp=2
                  
-<<<<<<< HEAD
+
         self.escena.blit(self.font.render(str(self.id),-1,Constantes.CL_WHITE),
                          (self.posx-self.desp, self.posy-15))
-=======
-        self.escena.blit(self.font.render(str(self.id),
-                                         -1,
-                                         (255, 255, 255)),
-                            (self.posx-self.desp, self.posy-15))
->>>>>>> branch 'feature-generacion' of https://github.com/emiliosmoreno/atc-simulator.git
-        
+ 
 # Clase principal del juego
 class ATCsimulator:
 
