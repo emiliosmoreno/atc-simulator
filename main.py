@@ -87,7 +87,8 @@ class Avion:
 # Clase principal del juego
 class ATCsimulator:
 
-    # Método de inicialización 
+
+    # Método de inicialización   
     def __init__(self):
         
         self.clock = pygame.time.Clock()
