@@ -7,6 +7,8 @@ from pygame.locals import *
 # Constantes 
 class Constantes:
     
+    DEBUG = True
+    
     CL_BLUE=(0,0,255)
     CL_BLACK=(0,0,0)
     CL_WHITE=(255,255,255) 
@@ -26,29 +28,42 @@ class Constantes:
     
 class Avion:
     
-    def __init__(self, escena, x, y, velocidad, altura):
+    def __init__(self, escena, x, y, velocidad, altura, direccion):
         self.id=Constantes.AIRLINES[random.randint(1,3)]+str(random.randint(0,99))
         self.posx=x
         self.posy=y
         self.posz=altura
         self.escena=escena
         self.velocidad = velocidad / 100
-        self.direccion=180 #Valores permitidos: 1-360 (grados)s
+        self.direccion=direccion #Valores permitidos: 1-360 (grados)s
         self.font = pygame.font.SysFont("Arial", 12)
 
     def avanzar(self):
        
-        desplazamiento_x=math.cos(math.radians(self.direccion))
-        desplazamiento_y=math.sin(math.radians(self.direccion))
-        if (self.posx < 0):
-            self.posx = -self.posx + desplazamiento_x-self.velocidad
-        
-        if (self.posx > 0):
-            self.posx = self.posx + desplazamiento_x -self.velocidad
-        
-        self.posy = self.posy + math.sin(math.radians(self.direccion))
-        #print(str(self.posx)+","+str(self.posy)+" - dx="+str(desplazamiento_x)+", dy="+str(desplazamiento_y)+", v="+str(self.velocidad)+", mv="+str(self.velocidad/100))
-        #self.velocidad = self.velocidad+0.01
+        desplazamiento_x=0
+        desplazamiento_y=0
+        if (self.direccion>=0 and self.direccion<=90): 
+            #1er cuadrante
+            desplazamiento_x=math.cos(math.radians(self.direccion-90))*self.velocidad
+            desplazamiento_y=math.sin(math.radians(self.direccion-90))*self.velocidad
+        else:
+            if (self.direccion>90 and self.direccion<=180):
+                #2do cuadrante
+                desplazamiento_x=math.sin(math.radians(180-self.direccion))*self.velocidad
+                desplazamiento_y=math.cos(math.radians(180-self.direccion))*self.velocidad
+            else:
+                if (self.direccion>180 and self.direccion<=270):
+                    #3er cuadrante
+                    desplazamiento_x=math.cos(math.radians(self.direccion-90))*self.velocidad
+                    desplazamiento_y=math.sin(math.radians(self.direccion-90))*self.velocidad
+                else:
+                    if (self.direccion>270 and self.direccion<=360):
+                        #4to cuadrante
+                        desplazamiento_x=math.cos(math.radians(self.direccion-90))*self.velocidad
+                        desplazamiento_y=math.sin(math.radians(self.direccion-90))*self.velocidad   
+            
+        self.posx = self.posx + desplazamiento_x
+        self.posy = self.posy + desplazamiento_y
         
     def pintar(self):
         self.airplane=[]
@@ -103,10 +118,24 @@ class ATCsimulator:
         self.aviones =[]
         self.num_aviones=0
         
-        new_avion = Avion(self.escena, 850,300, 100,2000)
+        #Cuadrante 1
+        new_avion = Avion(self.escena, 400,300, 100,2000, 45)
         self.aviones.append(new_avion)
         
-        new_avion = Avion(self.escena, 850,350, 150,2000)
+        #Cuadrante 2
+        new_avion = Avion(self.escena, 400,300, 150,2000, 135)
+        #new_avion = Avion(self.escena, 400,300, 100,2000, 180)
+        self.aviones.append(new_avion)
+        
+        #Cuadrante 3
+        #new_avion = Avion(self.escena, 400,300, 100,2000, 190)
+        new_avion = Avion(self.escena, 400,300, 100,2000, 225)
+        #new_avion = Avion(self.escena, 400,300, 100,2000, 270)
+        self.aviones.append(new_avion)
+        
+        #Cuadrante 4
+        new_avion = Avion(self.escena, 400,300, 150,2000, 315)
+        #new_avion = Avion(self.escena, 400,300, 100,2000, 360)
         self.aviones.append(new_avion)
         
     # Ejecución del juego      
@@ -148,7 +177,8 @@ def pintar_espacio_aereo(self):
 
 # Método encargado de pintar los aviones en el espacio aéreo
 def pintar_aviones(self):
-    print("\n")
+    if Constantes.DEBUG:
+        print("\n")
     for avion in self.aviones:
         avion.avanzar()
         avion.pintar()
