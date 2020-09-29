@@ -8,7 +8,7 @@ from pygame.locals import *
 class Constantes:
     
     DEBUG = False
-    
+  
     CL_BLUE=(0,0,255)
     CL_BLACK=(0,0,0)
     CL_WHITE=(255,255,255) 
