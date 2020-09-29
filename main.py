@@ -8,7 +8,7 @@ from pygame.locals import *
 class Constantes:
     
     DEBUG = False
-    
+  
     CL_BLUE=(0,0,255)
     CL_BLACK=(0,0,0)
     CL_WHITE=(255,255,255) 
@@ -25,6 +25,8 @@ class Constantes:
     CL_BLACK=(0,0,0)
     CL_WHITE=(255,255,255)
     AIRLINES=["IB","AFL","AFR","VLG"]
+    
+    TAMANYO_AVION=3
     
 class Avion:
     
@@ -64,27 +66,30 @@ class Avion:
             
         self.posx = self.posx + desplazamiento_x
         self.posy = self.posy + desplazamiento_y
-        
+    
     def pintar(self):
+        
         self.airplane=[]
-        
-        #print(self.id+" - v="+str(self.velocidad))
-        traza=self.velocidad
-        tamanyo=3
-        distancia=5
-        self.airplane.append(pygame.Rect(self.posx, self.posy, tamanyo, tamanyo))
-        
-        
-
-        #while (traza>0):
-        #    self.airplane.append(pygame.Rect(self.posx+distancia, self.posy+distancia, tamanyo, tamanyo))
-        #    tamanyo=tamanyo-0.5
-        #    distancia=distancia+5
-        #    traza=traza-0.5
-        
+        Avion.generar_avion(self)
+        #Avion.generar_estela_avion(self)
         for traza_avion in self.airplane:  
-            pygame.draw.rect(self.escena, Constantes.CL_WHITE, traza_avion) 
-            
+             pygame.draw.rect(self.escena, Constantes.CL_WHITE, traza_avion) 
+           
+    def generar_avion(self):
+       
+        self.airplane.append(pygame.Rect(self.posx, self.posy, Constantes.TAMANYO_AVION, Constantes.TAMANYO_AVION))
+    
+    def generar_estela_avion(self):
+        
+        traza=self.velocidad
+        distancia=5
+        tamanyo=Constantes.TAMANYO_AVION
+        while (traza>0):
+            self.airplane.append(pygame.Rect(self.posx+distancia, self.posy+distancia, tamanyo, tamanyo))
+            tamanyo=tamanyo-0.1
+            distancia=distancia+5
+            traza=traza-0.5
+               
     def pintar_datos_avion(self):
         
         if (len(self.id)<2):
